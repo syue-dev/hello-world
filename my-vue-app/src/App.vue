@@ -4,12 +4,25 @@ import { ref } from 'vue'
 
 const input = ref('')
 const loading = ref(false)
+const count = ref(0)
 
 const handleClick = () => {
   loading.value = true
   setTimeout(() => {
     loading.value = false
   }, 2000)
+}
+
+const increment = () => {
+  count.value++
+}
+
+const decrement = () => {
+  count.value--
+}
+
+const reset = () => {
+  count.value = 0
 }
 </script>
 
@@ -58,6 +71,30 @@ const handleClick = () => {
             </template>
           </el-input>
           <p v-if="input">输入的内容：{{ input }}</p>
+        </el-card>
+
+        <el-card class="demo-card">
+          <h3>计数器功能</h3>
+          <div class="counter-container">
+            <div class="counter-display">
+              <span class="counter-label">当前计数：</span>
+              <span class="counter-value">{{ count }}</span>
+            </div>
+            <el-space>
+              <el-button type="primary" @click="increment">
+                <el-icon><Plus /></el-icon>
+                增加
+              </el-button>
+              <el-button type="warning" @click="decrement" :disabled="count <= 0">
+                <el-icon><Minus /></el-icon>
+                减少
+              </el-button>
+              <el-button type="info" @click="reset">
+                <el-icon><Refresh /></el-icon>
+                重置
+              </el-button>
+            </el-space>
+          </div>
         </el-card>
 
         <el-card class="demo-card">
@@ -115,5 +152,36 @@ const handleClick = () => {
 .demo-card h3 {
   margin-bottom: 15px;
   color: #409eff;
+}
+
+.counter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.counter-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+}
+
+.counter-label {
+  color: #606266;
+  font-weight: 500;
+}
+
+.counter-value {
+  color: #409eff;
+  font-size: 24px;
+  font-weight: bold;
+  min-width: 40px;
+  text-align: center;
+  padding: 8px 16px;
+  background: #f0f9ff;
+  border-radius: 6px;
+  border: 2px solid #409eff;
 }
 </style>
